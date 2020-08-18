@@ -117,8 +117,9 @@ esVocaloid(Cantante):-
         Puntaje is PuntajeConciertos * CantCanciones.
 
     cantidadDeConciertos(Cantante, PuntajeConciertos):-
-        findall(Puntaje, (puedeParticipar(Cantante, Concierto), concierto(Concierto, _, Puntaje, _)), ListaDePuntajes),
-        list_to_set(ListaDePuntajes, X),        
+        findall(Concierto, puedeParticipar(Cantante, Concierto), ListaDeConciertos),
+        findall(Puntaje, (member(Concierto, ListaDeConciertos), concierto(Concierto, _, Puntaje, _)), ListaDePuntaje),
+        list_to_set(ListaDePuntaje, X),        
         sum_list(X, PuntajeConciertos).
 
 /* Punto 4
