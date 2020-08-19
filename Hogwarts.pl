@@ -129,6 +129,17 @@ mago(Mago):-
 /* Punto 4
     Definir un predicado cadenaDeAmistades/1 que se cumple para una lista de magos si todos ellos se caracterizan por ser amistosos y cada uno podría estar en la misma casa que el siguiente. No hace falta que sea inversible, se consultará de forma individual. */
     
+    /* OPCION 2
+    cadenaDeAmistades([UltimoAmigo]):-
+        caracteristica(UltimoAmigo, amistoso).
+
+    cadenaDeAmistades([PrimerAmigo,SegundoAmigo|OtrosAmigos]):-
+        caracteristica(PrimerAmigo, amistoso),
+        puedeQuedarSeleccionado(PrimerAmigo, Escuela),
+        puedeQuedarSeleccionado(SegundoAmigo, Escuela),
+        PrimerAmigo = SegundoAmigo,
+        cadenaDeAmistades([SegundoAmigo|OtrosAmigos]).*/
+        
     cadenaDeAmistades(Magos):-
         todosAmistosos(Magos),
         cadenaDeCasas(Magos).
@@ -162,6 +173,9 @@ mago(Mago):-
         puedeQuedarSeleccionadoPara(Mago1, Casa),
         puedeQuedarSeleccionadoPara(Mago2, Casa),
         Mago1 \= Mago2.
+
+
+    
 
 
 /* ------------------------------------- 
