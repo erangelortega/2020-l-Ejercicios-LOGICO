@@ -141,6 +141,7 @@ cazafantasmas(winston).
         herramientasRequeridas(Tarea, ListaDeHerramientas),
         length(ListaDeHerramientas, Cantidad),
         Cantidad > 2.
+    tareaCompleja(limpiarTecho).
 
 
 /* Punto 6

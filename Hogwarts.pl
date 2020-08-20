@@ -155,6 +155,7 @@ mago(Mago):-
       cadenaDeCasas([Mago1, Mago2 | MagosSiguientes]):-
         puedeQuedarSeleccionadoPara(Mago1, Casa),
         puedeQuedarSeleccionadoPara(Mago2, Casa),
+        Mago1 \= Mago2,
         cadenaDeCasas([Mago2 | MagosSiguientes]).
       cadenaDeCasas([_]).
       cadenaDeCasas([]).
@@ -272,17 +273,18 @@ mago(Mago):-
     lugarProhibido(seccionRestringida, 10).
     lugarProhibido(tercerPiso, 75).
 
-
+% PUNTO 1 a
     esBuenAlumno(Mago):-
     hizoAlgunaAccion(Mago),
     not(hizoAlgoMalo(Mago)).
 
+
 /*  b. Saber si una acción es recurrente, que se cumple si más de un mago hizo esa misma acción. */
 
-%  OPCION 1 - ACCIONES COMO PREDICADOS
+    %  OPCION 1 - ACCIONES COMO PREDICADOS
     /* la solucion no funciona, porque se necesita utilizar la ccion como un individuo*/
 
-% OPCION 2 - ACCIONES COMO INDIVIDUOS
+    % OPCION 2 - ACCIONES COMO INDIVIDUOS
     esRecurrente(Accion):-
         hizo(Mago, Accion),
         hizo(OtroMago, Accion),

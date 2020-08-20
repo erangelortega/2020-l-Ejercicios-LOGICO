@@ -13,7 +13,8 @@ cura(CantidadCura)
 Base de conocimiento
 */
 
-
+jugador(mecs, 1, 10, [criatura(golem, 7, 10, 8),hechizo(bolaDeFuego, danio(6), 4)], [criatura(golemChiquito, 7, 10, 8),criatura(messi, 10, 2, 6)], [criatura(golem, 7, 10, 8),criatura(mago, 5, 4, 4)]).
+jugador(daniel, 30, 7, [hechizo(bolaDeFuego, danio(6), 4), criatura(messi, 10, 2, 6), hechizo(bolaDeFuego, danio(6), 4)], [criatura(golem, 7, 10, 8),hechizo(curacionMistica, cura(10), 6)], [criatura(golemChiquito, 7, 10, 8),criatura(golem, 7, 10, 8),criatura(mago, 5, 4, 4)]).
 
 nombre(jugador(Nombre,_,_,_,_,_), Nombre).
 nombre(criatura(Nombre,_,_,_), Nombre).
@@ -40,10 +41,12 @@ cartasCampo(jugador(_,_,_,_,_,Cartas), Cartas).
   Relacionar un jugador con una carta que tiene. La carta podría estar en su mano, en el campo o en el mazo. */
 
   pertenece(Jugador, Carta):-
-    nombre(jugador(Nombre,_,_,_,_,_), Nombre).
-    cartasMazo(jugador(_,_,_,Carta,_,_), Carta).
+    cartasMazo(Jugador(_,_,_,Cartas,_,_), Cartas),
+    member(Carta, Cartas).
   pertenece(Jugador, Carta):-
-    cartasMano(jugador(_,_,_,_,Carta,_), Carta).
+    cartasMano(Jugador(_,_,_,_,Cartas,_), Cartas),
+    member(Carta, Cartas).
   pertenece(Jugador, Carta):-
-    cartasCampo(jugador(_,_,_,_,_,Carta), Carta).
+    cartasCampo(Jugador(_,_,_,_,_,Cartas), Cartas),
+    member(Carta, Cartas).
 

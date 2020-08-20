@@ -113,14 +113,14 @@ esVocaloid(Cantante):-
     nivelDeFama(Cantante, Puntaje):-
         esVocaloid(Cantante),
         cantidadDeCanciones(Cantante, CantCanciones),
-        cantidadDeConciertos(Cantante, PuntajeConciertos),
+        famaDeConciertos(Cantante, PuntajeConciertos),
         Puntaje is PuntajeConciertos * CantCanciones.
 
-    cantidadDeConciertos(Cantante, PuntajeConciertos):-
-        findall(Concierto, puedeParticipar(Cantante, Concierto), ListaDeConciertos),
-        findall(Puntaje, (member(Concierto, ListaDeConciertos), concierto(Concierto, _, Puntaje, _)), ListaDePuntaje),
-        list_to_set(ListaDePuntaje, X),        
-        sum_list(X, PuntajeConciertos).
+    famaDeConciertos(Cantante, PuntajeConciertos):-
+        findall(Concierto, puedeParticipar(Cantante, Concierto), Lista),
+        list_to_set(Lista, ListaDeConciertos),
+        findall(Puntaje, (member(Concierto, ListaDeConciertos), concierto(Concierto, _, Puntaje, _)), ListaDePuntaje),       
+        sum_list(ListaDePuntaje, PuntajeConciertos).
 
 /* Punto 4
     Sabemos que:
@@ -155,8 +155,6 @@ esVocaloid(Cantante):-
     Supongamos que aparece un nuevo tipo de concierto y necesitamos tenerlo en cuenta en nuestra solución, explique los cambios que habría que realizar para que siga todo funcionando. 
         En la solución planteada habría que agregar 
         - un hecho mas en el predicado concierto/4 
-        - una claúsula en el predicado cumpleRCondiciones/2  que tenga en cuenta el nuevo functor con sus respectivas condiciones, en caso de que sea una nueva informacion que no cumpla con el patron
-            de lo que se tiene. 
-    
+        - una claúsula en el predicado cumpleRCondiciones/2  que tenga en cuenta el nuevo functor con sus respectivas condiciones del nuevo tipo de concierto
     ¿Qué conceptos facilitaron dicha implementación?
         El concepto que facilita los cambios para el nuevo requerimiento es el POLIMORFISMO, que nos permite dar un tratamiento en particular a cada uno de los conciertos en la cabeza de la cláusula.*/

@@ -25,6 +25,7 @@ odiariaIr(harry, slytherin).
 odiariaIr(draco, hufflepuff).
 
 
+% PUNTO 1
 permiteEntrarMago(Escuela, Mago):-
     sangre(Mago, _),
     escuela(Escuela),
@@ -43,6 +44,7 @@ Para Slytherin, lo más importante es el orgullo y la inteligencia.
 Para Ravenclaw, lo más importante es la inteligencia y la responsabilidad.
 Para Hufflepuff, lo más importante es ser amistoso.*/ 
 
+% PUNTO 2
 masImportante(gryffindor, coraje).
 masImportante(slytherin, orgulloso).
 masImportante(slytherin, inteligente).
@@ -56,7 +58,7 @@ caracterApropiado(Mago, Escuela):-
     forall(masImportante(Escuela, Caract), caracteristica(Mago, Caract)).
 
 %
-%
+% PUNTO 3
 
 puedeQuedarSeleccionado(hermione, gryffindor).
 
@@ -66,7 +68,7 @@ puedeQuedarSeleccionado(Mago, Escuela):-
     not(odiariaIr(Mago, Escuela)).
 
 %
-%
+% PUNTO 4
 
 cadenaDeAmistades([UltimoAmigo]):-
     caracteristica(UltimoAmigo, amistoso).
@@ -78,8 +80,9 @@ cadenaDeAmistades([PrimerAmigo,SegundoAmigo|OtrosAmigos]):-
     PrimerAmigo \= SegundoAmigo,
     cadenaDeAmistades([SegundoAmigo|OtrosAmigos]).
 
-%
-%
+
+%   ELIPSISIS
+%   PARTE 2
 %
 
 esDe(hermione, gryffindor).
@@ -109,14 +112,15 @@ accion(hermione, responderPregunta(dondeSeEncuentraUnBezoar, 20, snape)).
 accion(hermione, responderPregunta(comoHacerLevitarUnaPluma, 25, flitwick)).
 
 
-puntos(responderPregunta(_, Puntos, Profesor), Puntos):-
-    Profesor \= snape.
-puntos(responderPregunta(_, Dificultad, snape), Puntos):-
-    Puntos is Dificultad / 2.
 puntos(fueraDeCama, -50).
 puntos(irA(Lugar), Puntos):-
     lugarProhibido(Lugar, Puntos).
 puntos(buenaAccion(_, Puntos), Puntos).
+puntos(responderPregunta(_, Puntos, Profesor), Puntos):-
+    Profesor \= snape.
+puntos(responderPregunta(_, Dificultad, snape), Puntos):-
+    Puntos is Dificultad / 2.
+
 
 lugarProhibido(tercerPiso, -75).
 lugarProhibido(biblioteca, -10).
@@ -139,27 +143,31 @@ hizoAlgoMalo(Mago):-
     puntos(Accion, Puntos),
     Puntos < 0.
 
+% PUNTO 1 a
 buenAlumno(Mago):-
     hizoAccion(Mago),
     not(hizoAlgoMalo(Mago)).
 
+% PUNTO 1 b
 accionRecurrente(Accion):-
     accion(Mago, Accion),
     accion(OtroMago, Accion),
     Mago \= OtroMago.
 
 %
-%
+% PUNTO 2
 
 puntosDelMago(Mago, Accion, Puntos):-
     accion(Mago, Accion),
     puntos(Accion, Puntos).
+
 
 puntajeTotal(Escuela, PuntajeFinal):-
     escuela(Escuela),
     findall(Puntaje, (esDe(Mago, Escuela), puntosDelMago(Mago, _, Puntaje)), ListaDePuntajes),
     sum_list(ListaDePuntajes, PuntajeFinal).
 
+% PUNTO 3
 mejorEscuela(Escuela):-
     puntajeTotal(Escuela, MayorPuntaje),
     forall((puntajeTotal(Escuelas, Puntajes), Escuelas \= Escuela), Puntajes < MayorPuntaje).
